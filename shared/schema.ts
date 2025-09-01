@@ -7,6 +7,23 @@ export const users = pgTable("users", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
+  name: text("name").notNull(),
+  phone: text("phone"),
+  email: text("email"),
+  address: text("address"),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const userAddresses = pgTable("user_addresses", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id),
+  type: text("type").notNull(), // home, work, other
+  label: text("label").notNull(),
+  address: text("address").notNull(),
+  details: text("details"),
+  isDefault: boolean("is_default").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const categories = pgTable("categories", {
@@ -52,14 +69,16 @@ export const orders = pgTable("orders", {
   deliveryAddress: text("delivery_address").notNull(),
   notes: text("notes"),
   paymentMethod: text("payment_method").notNull(),
-  status: text("status").default("pending"),
+  status: text("status").default("pending"), // pending, confirmed, preparing, on_way, delivered, cancelled
   items: text("items").notNull(), // JSON string of cart items
   subtotal: integer("subtotal").notNull(),
   deliveryFee: integer("delivery_fee").notNull(),
   total: integer("total").notNull(),
+  estimatedTime: text("estimated_time").default("30-45 دقيقة"),
   restaurantId: varchar("restaurant_id").references(() => restaurants.id),
   driverId: varchar("driver_id").references(() => drivers.id),
   createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 export const drivers = pgTable("drivers", {

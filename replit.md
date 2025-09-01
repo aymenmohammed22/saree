@@ -1,76 +1,183 @@
-# Overview
+# تطبيق السريع ون - نظام توصيل الطلبات الشامل
 
-This is a modern food delivery application called "السريع ون" (Fast One) built with React frontend and Express.js backend. The application allows users to browse restaurants by category, view menus, add items to cart, and place orders. It features a comprehensive admin panel for managing restaurants, categories, menu items, and orders.
+## نظرة عامة
 
-# User Preferences
+تطبيق السريع ون هو منصة توصيل طلبات شاملة تهدف إلى ربط المطاعم والمتاجر بالعملاء عبر نظام توصيل فعال. يتكون النظام من ثلاث تطبيقات رئيسية تعمل بتناغم لتوفير تجربة متكاملة.
 
-Preferred communication style: Simple, everyday language.
+## التطبيقات الثلاثة
 
-# System Architecture
+### 1. تطبيق العملاء (/)
+التطبيق الرئيسي للعملاء النهائيين لطلب الطعام والمنتجات.
 
-## Frontend Architecture
-- **Framework**: React 18 with TypeScript
-- **Build Tool**: Vite for fast development and optimized builds
-- **Styling**: Tailwind CSS with shadcn/ui component library
-- **State Management**: React Context API for cart and theme management
-- **Data Fetching**: TanStack Query (React Query) for server state management
-- **Routing**: Wouter for lightweight client-side routing
-- **UI Components**: Radix UI primitives with custom styled components
+**الصفحات والميزات:**
+- **الصفحة الرئيسية (/)**: عرض المطاعم والتصنيفات مع إمكانية البحث
+- **صفحة المطعم (/restaurant/:id)**: عرض قائمة الطعام والعروض الخاصة
+- **السلة (/cart)**: إدارة الطلبات مع تفاصيل التوصيل وطرق الدفع
+- **الملف الشخصي (/profile)**: إدارة المعلومات الشخصية والإحصائيات
+- **العناوين المحفوظة (/addresses)**: إدارة عناوين التوصيل مع إمكانية الحفظ
+- **تتبع الطلب (/orders/:id)**: متابعة حالة الطلب في الوقت الفعلي
+- **الإعدادات (/settings)**: تخصيص إعدادات التطبيق والإشعارات
+- **سياسة الخصوصية (/privacy)**: معلومات مفصلة حول حماية البيانات
 
-## Backend Architecture
-- **Framework**: Express.js with TypeScript
-- **Database ORM**: Drizzle ORM for type-safe database operations
-- **Database**: PostgreSQL with Neon Database hosting
-- **API Design**: RESTful endpoints with proper HTTP status codes
-- **File Structure**: Modular route handlers with separate storage layer
-- **Development**: Hot-reload with Vite integration for full-stack development
+**المميزات الرئيسية:**
+- واجهة عربية بالكامل مع دعم الكتابة من اليمين إلى اليسار (RTL)
+- نظام سلة تسوق مع حفظ محلي
+- عرض العروض الخاصة والتخفيضات
+- تتبع الطلبات في الوقت الفعلي
+- إدارة متعددة لعناوين التوصيل
+- نظام إشعارات متقدم
+- دعم الوضع الليلي/النهاري
 
-## Database Schema
-The application uses PostgreSQL with the following main entities:
-- **Users**: Basic authentication with username/password
-- **Categories**: Restaurant categorization (مطاعم، مقاهي، حلويات، etc.)
-- **Restaurants**: Restaurant information including ratings, delivery times, and status
-- **Menu Items**: Products with pricing, categories, and special offers
-- **Orders**: Order management with customer details and item lists
-- **Drivers**: Delivery driver management system
+### 2. لوحة التحكم الإدارية (/admin)
+نظام إدارة شامل لأصحاب المطاعم والمديرين.
 
-## Key Design Patterns
-- **Separation of Concerns**: Clear separation between frontend, backend, and database layers
-- **Type Safety**: Full TypeScript implementation with shared types between frontend and backend
-- **Component Composition**: Reusable UI components with consistent design system
-- **State Management**: Context providers for global state (cart, theme) with local component state
-- **Error Handling**: Centralized error handling with user-friendly toast notifications
+**الوظائف الإدارية:**
+- **إدارة المطاعم**: إضافة وتعديل وحذف المطاعم
+- **إدارة التصنيفات**: تنظيم تصنيفات المطاعم والمنتجات
+- **إدارة المنتجات**: إضافة وتعديل عناصر القوائم
+- **إدارة الطلبات**: متابعة وتحديث حالة الطلبات
+- **إدارة السائقين**: إضافة وإدارة سائقي التوصيل
+- **إدارة العروض**: إنشاء وإدارة العروض الخاصة
+- **التقارير والإحصائيات**: عرض بيانات المبيعات والأداء
 
-## Mobile-First Design
-- Responsive design optimized for mobile devices
-- Touch-friendly interface with floating cart button
-- Arabic language support with proper RTL considerations
-- Native-like mobile app experience
+**لوحة المعلومات:**
+- إحصائيات يومية للطلبات والإيرادات
+- عدد المطاعم النشطة
+- عدد السائقين المتاحين
+- رسوم بيانية للأداء
 
-# External Dependencies
+### 3. تطبيق السائقين (/delivery)
+تطبيق مخصص لسائقي التوصيل لإدارة المهام.
 
-## Database & Hosting
-- **Neon Database**: PostgreSQL hosting service for production database
-- **Drizzle Kit**: Database migration and schema management tools
+**المميزات للسائقين:**
+- **حالة التوفر**: تفعيل/إلغاء تفعيل استقبال الطلبات
+- **الطلبات المتاحة**: عرض الطلبات الجديدة مع تفاصيل العمولة
+- **الطلبات الحالية**: إدارة الطلبات قيد التوصيل
+- **التنقل المباشر**: ربط مع خرائط جوجل للتوجيه
+- **الاتصال بالعملاء**: إمكانية الاتصال المباشر
+- **تتبع الأرباح**: عرض الأرباح اليومية والشهرية
+- **إحصائيات الأداء**: متوسط الطلبات والتقييمات
 
-## UI & Styling
-- **shadcn/ui**: Pre-built accessible UI components
-- **Radix UI**: Headless UI primitives for complex components
-- **Tailwind CSS**: Utility-first CSS framework
-- **Lucide React**: Icon library for consistent iconography
+## البنية التقنية
 
-## Development Tools
-- **Vite**: Fast build tool with HMR support
-- **TypeScript**: Type safety across the entire application
-- **ESBuild**: Fast JavaScript bundler for production builds
+### الواجهة الأمامية (Frontend)
+- **إطار العمل**: React 18 مع TypeScript
+- **أداة البناء**: Vite للتطوير السريع
+- **التصميم**: Tailwind CSS مع مكتبة shadcn/ui
+- **إدارة الحالة**: React Context API للسلة والثيم
+- **استعلام البيانات**: TanStack Query (React Query)
+- **التوجيه**: Wouter للتنقل خفيف الوزن
+- **مكونات واجهة المستخدم**: Radix UI مع تخصيصات
 
-## External Services
-- **Font Integration**: Google Fonts for Arabic (Noto Sans Arabic) and Latin (Inter) typography
-- **Replit Integration**: Development environment optimizations and error reporting
+### الواجهة الخلفية (Backend)
+- **إطار العمل**: Express.js مع TypeScript
+- **قاعدة البيانات**: PostgreSQL مع Neon Database
+- **ORM**: Drizzle ORM للعمليات الآمنة
+- **تصميم API**: RESTful endpoints مع رموز HTTP صحيحة
+- **بنية الملفات**: معالجات مسارات منفصلة مع طبقة تخزين
+- **التطوير**: إعادة تحميل ساخنة مع تكامل Vite
 
-## Form Handling & Validation
-- **React Hook Form**: Efficient form state management
-- **Zod**: Schema validation for both frontend and backend
-- **Hookform Resolvers**: Integration between React Hook Form and Zod
+### قاعدة البيانات
+**الجداول الرئيسية:**
+- **المستخدمون (users)**: بيانات المستخدمين والمصادقة
+- **عناوين المستخدمين (user_addresses)**: عناوين التوصيل المحفوظة
+- **التصنيفات (categories)**: تصنيفات المطاعم
+- **المطاعم (restaurants)**: معلومات المطاعم والحالة
+- **عناصر القائمة (menu_items)**: المنتجات والأسعار
+- **الطلبات (orders)**: تفاصيل الطلبات وحالة التتبع
+- **السائقون (drivers)**: معلومات سائقي التوصيل
+- **العروض الخاصة (special_offers)**: العروض والتخفيضات
 
-The application is designed to be easily deployable on platforms like Replit while maintaining production-ready code quality and performance.
+## الميزات الرئيسية للنظام
+
+### للعملاء
+1. **تصفح سهل**: واجهة بديهية لتصفح المطاعم والمنتجات
+2. **بحث متقدم**: البحث عن المطاعم والوجبات
+3. **سلة ذكية**: إدارة الطلبات مع حفظ تلقائي
+4. **تتبع مباشر**: متابعة حالة الطلب خطوة بخطوة
+5. **عناوين متعددة**: حفظ وإدارة عناوين التوصيل
+6. **دفع متنوع**: دعم طرق دفع متعددة
+7. **إشعارات فورية**: تحديثات حالة الطلب
+
+### للمطاعم والإدارة
+1. **إدارة شاملة**: تحكم كامل في المطعم والقوائم
+2. **تتبع الطلبات**: إدارة ومتابعة جميع الطلبات
+3. **إحصائيات مفصلة**: تقارير المبيعات والأداء
+4. **إدارة العروض**: إنشاء عروض جذابة
+5. **إدارة السائقين**: تنسيق عمليات التوصيل
+6. **تحديثات فورية**: تحديث حالة الطلبات في الوقت الفعلي
+
+### للسائقين
+1. **إدارة مرنة**: تحكم في حالة التوفر
+2. **اختيار الطلبات**: قبول الطلبات المناسبة
+3. **تنقل محسن**: توجيه GPS مباشر
+4. **تواصل سهل**: اتصال مباشر بالعملاء
+5. **تتبع الأرباح**: مراقبة الدخل والإحصائيات
+6. **واجهة بسيطة**: تصميم مخصص للاستخدام أثناء القيادة
+
+## إعداد وتشغيل النظام
+
+### متطلبات النظام
+- Node.js 20+
+- PostgreSQL database
+- متصفح حديث يدعم ES6+
+
+### خطوات التشغيل
+
+1. **تثبيت التبعيات**:
+```bash
+npm install
+```
+
+2. **إعداد قاعدة البيانات**:
+   - إنشاء قاعدة بيانات PostgreSQL
+   - تحديث متغيرات البيئة
+   - تشغيل migrations
+
+3. **تشغيل التطبيق**:
+```bash
+npm run dev
+```
+
+### الوصول للتطبيقات
+- **تطبيق العملاء**: `http://localhost:5000/`
+- **لوحة التحكم**: `http://localhost:5000/admin`
+- **تطبيق السائقين**: `http://localhost:5000/delivery`
+
+## الأمان والخصوصية
+
+- **تشفير البيانات**: جميع البيانات الحساسة مشفرة
+- **مصادقة آمنة**: نظام مصادقة قوي للمستخدمين
+- **حماية API**: تحقق من الصلاحيات لجميع العمليات
+- **خصوصية البيانات**: امتثال لمعايير حماية البيانات
+- **نسخ احتياطي**: نسخ احتياطي منتظم لقاعدة البيانات
+
+## التحديثات المستقبلية
+
+- **دفع إلكتروني**: ربط مع بوابات دفع محلية ودولية
+- **إشعارات الدفع**: رسائل SMS وإشعارات فورية
+- **تطبيق موبايل**: نسخ Android و iOS
+- **ذكاء اصطناعي**: توصيات شخصية للعملاء
+- **تحليلات متقدمة**: رؤى أعمق لسلوك العملاء
+
+## الدعم والصيانة
+
+- **مراقبة 24/7**: مراقبة مستمرة لأداء النظام
+- **تحديثات أمنية**: تحديثات دورية للحماية
+- **دعم فني**: فريق دعم متخصص
+- **تدريب المستخدمين**: دورات تدريبية للمطاعم والسائقين
+
+## معلومات الاتصال
+
+- **الموقع الإلكتروني**: [alsarie-one.com]
+- **البريد الإلكتروني**: support@alsarie-one.com
+- **الهاتف**: +967-1-234567
+- **العنوان**: صنعاء، اليمن
+
+## الخلاصة
+
+تطبيق السريع ون يوفر حلاً متكاملاً لصناعة توصيل الطعام في اليمن، مع التركيز على الجودة والسرعة وسهولة الاستخدام. النظام مصمم ليكون قابلاً للتوسع ويدعم النمو المستقبلي للأعمال.
+
+---
+
+*تم تطوير هذا النظام باستخدام أحدث التقنيات لضمان الأداء الأمثل والأمان الكامل.*
