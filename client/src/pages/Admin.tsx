@@ -43,6 +43,7 @@ export default function Admin() {
       description: 'إضافة، تعديل وحذف المطاعم',
       color: 'text-primary',
       testId: 'admin-restaurants',
+      path: '/admin/restaurants',
     },
     {
       icon: Tags,
@@ -50,6 +51,7 @@ export default function Admin() {
       description: 'إدارة تصنيفات المطاعم',
       color: 'text-green-500',
       testId: 'admin-categories',
+      path: '/admin/categories',
     },
     {
       icon: ShoppingBag,
@@ -57,13 +59,7 @@ export default function Admin() {
       description: 'متابعة وإدارة الطلبات',
       color: 'text-blue-500',
       testId: 'admin-orders',
-    },
-    {
-      icon: Percent,
-      title: 'إدارة العروض',
-      description: 'إنشاء وإدارة العروض الخاصة',
-      color: 'text-purple-500',
-      testId: 'admin-offers',
+      path: '/admin/orders',
     },
     {
       icon: Truck,
@@ -71,6 +67,15 @@ export default function Admin() {
       description: 'إضافة وإدارة السائقين',
       color: 'text-orange-500',
       testId: 'admin-drivers',
+      path: '/admin/drivers',
+    },
+    {
+      icon: Percent,
+      title: 'إدارة العروض',
+      description: 'إنشاء وإدارة العروض الخاصة',
+      color: 'text-purple-500',
+      testId: 'admin-offers',
+      path: '/admin/offers',
     },
     {
       icon: BarChart,
@@ -78,6 +83,7 @@ export default function Admin() {
       description: 'عرض التقارير المالية والإحصائيات',
       color: 'text-red-500',
       testId: 'admin-reports',
+      path: '/admin/reports',
     },
   ];
 
@@ -153,6 +159,7 @@ export default function Admin() {
                 key={item.testId}
                 variant="ghost"
                 className="w-full h-auto p-4 justify-between hover:bg-accent"
+                onClick={() => setLocation(item.path)}
                 data-testid={item.testId}
               >
                 <div className="flex items-center gap-3">

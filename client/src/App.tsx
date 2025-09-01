@@ -15,6 +15,10 @@ import OrderTracking from "./pages/OrderTracking";
 import Settings from "./pages/Settings";
 import Privacy from "./pages/Privacy";
 import Admin from "./pages/Admin";
+import AdminCategories from "./pages/AdminCategories";
+import AdminOrders from "./pages/AdminOrders";
+import AdminDrivers from "./pages/AdminDrivers";
+import AdminRestaurants from "./pages/AdminRestaurants";
 import Delivery from "./pages/Delivery";
 import NotFound from "@/pages/not-found";
 
@@ -31,6 +35,10 @@ function Router() {
       <Route path="/settings" component={Settings} />
       <Route path="/privacy" component={Privacy} />
       <Route path="/admin" component={Admin} />
+      <Route path="/admin/categories" component={AdminCategories} />
+      <Route path="/admin/orders" component={AdminOrders} />
+      <Route path="/admin/drivers" component={AdminDrivers} />
+      <Route path="/admin/restaurants" component={AdminRestaurants} />
       <Route path="/delivery" component={Delivery} />
       <Route component={NotFound} />
     </Switch>
