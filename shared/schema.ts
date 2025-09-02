@@ -1,8 +1,9 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, boolean, timestamp, decimal, array } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, integer, boolean, timestamp, decimal } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+// ---------- Users ----------
 export const users = pgTable("users", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   username: text("username").notNull().unique(),
@@ -15,6 +16,7 @@ export const users = pgTable("users", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// ---------- User Addresses ----------
 export const userAddresses = pgTable("user_addresses", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   userId: varchar("user_id").references(() => users.id),
@@ -26,6 +28,7 @@ export const userAddresses = pgTable("user_addresses", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// ---------- Categories ----------
 export const categories = pgTable("categories", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   name: text("name").notNull(),
@@ -33,12 +36,13 @@ export const categories = pgTable("categories", {
   isActive: boolean("is_active").default(true),
 });
 
+// ---------- Restaurants ----------
 export const restaurants = pgTable("restaurants", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   name: text("name").notNull(),
   description: text("description"),
   image: text("image").notNull(),
-  rating: decimal("rating", { precision: 2, scale: 1 }).default("0"),
+  rating: decimal("rating", { precision: 2, scale: 1 }).default("0.0"),
   reviewCount: integer("review_count").default(0),
   deliveryTime: text("delivery_time").notNull(),
   isOpen: boolean("is_open").default(true),
@@ -48,6 +52,7 @@ export const restaurants = pgTable("restaurants", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// ---------- Menu Items ----------
 export const menuItems = pgTable("menu_items", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   name: text("name").notNull(),
@@ -61,6 +66,20 @@ export const menuItems = pgTable("menu_items", {
   restaurantId: varchar("restaurant_id").references(() => restaurants.id),
 });
 
+// ---------- Drivers ----------
+export const drivers = pgTable("drivers", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  phone: text("phone").notNull(),
+  password: text("password").notNull(),
+  isAvailable: boolean("is_available").default(true),
+  isActive: boolean("is_active").default(true),
+  currentLocation: text("current_location"),
+  earnings: integer("earnings").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// ---------- Orders ----------
 export const orders = pgTable("orders", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   customerName: text("customer_name").notNull(),
@@ -81,18 +100,7 @@ export const orders = pgTable("orders", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-export const drivers = pgTable("drivers", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  name: text("name").notNull(),
-  phone: text("phone").notNull(),
-  password: text("password").notNull(),
-  isAvailable: boolean("is_available").default(true),
-  isActive: boolean("is_active").default(true),
-  currentLocation: text("current_location"),
-  earnings: integer("earnings").default(0),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
+// ---------- Special Offers ----------
 export const specialOffers = pgTable("special_offers", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   title: text("title").notNull(),
@@ -106,7 +114,12 @@ export const specialOffers = pgTable("special_offers", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-// Insert schemas
+// ---------- Insert Schemas ----------
+export const insertUserSchema = createInsertSchema(users).pick({
+  username: true,
+  password: true,
+});
+
 export const insertCategorySchema = createInsertSchema(categories).omit({
   id: true,
 });
@@ -135,7 +148,10 @@ export const insertSpecialOfferSchema = createInsertSchema(specialOffers).omit({
   createdAt: true,
 });
 
-// Types
+// ---------- Types ----------
+export type User = typeof users.$inferSelect;
+export type InsertUser = z.infer<typeof insertUserSchema>;
+
 export type Category = typeof categories.$inferSelect;
 export type InsertCategory = z.infer<typeof insertCategorySchema>;
 
@@ -153,11 +169,3 @@ export type InsertDriver = z.infer<typeof insertDriverSchema>;
 
 export type SpecialOffer = typeof specialOffers.$inferSelect;
 export type InsertSpecialOffer = z.infer<typeof insertSpecialOfferSchema>;
-
-export type User = typeof users.$inferSelect;
-export type InsertUser = z.infer<typeof insertUserSchema>;
-
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
-});

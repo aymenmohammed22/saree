@@ -3,11 +3,20 @@
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aymenmohammed22/c-digo-.git"
+  },
   "scripts": {
     "dev": "NODE_ENV=development tsx server/index.ts",
     "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
+    "build:client": "vite build --outDir dist/client",
+    "build:admin": "vite build --outDir dist/admin",
+    "build:delivery": "vite build --outDir dist/delivery",
+    "build:all": "npm run build:client && npm run build:admin && npm run build:delivery",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc",
+    "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push"
   },
   "dependencies": {
