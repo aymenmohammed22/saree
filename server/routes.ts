@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { dbStorage } from "./db";
 import { 
   insertRestaurantSchema, 
   insertMenuItemSchema, 
@@ -9,9 +10,107 @@ import {
   insertCategorySchema, 
   insertSpecialOfferSchema 
 } from "@shared/schema";
+import { randomUUID } from "crypto";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
+  // Admin Authentication Routes
+  app.post("/api/admin/login", async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      
+      if (!email || !password) {
+        return res.status(400).json({ message: "البريد الإلكتروني وكلمة المرور مطلوبان" });
+      }
+
+      // Check if it's the main admin
+      if (email === "aymenpro124@gmail.com" && password === "777146387") {
+        const token = randomUUID();
+        const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+
+        await dbStorage.createAdminSession({
+          adminId: "admin-main",
+          token,
+          userType: "admin",
+          expiresAt
+        });
+
+        res.json({
+          success: true,
+          token,
+          userType: "admin",
+          message: "تم تسجيل الدخول بنجاح"
+        });
+        return;
+      }
+
+      // Check for drivers in the drivers table
+      const drivers = await storage.getDrivers();
+      const driver = drivers.find(d => d.phone === email && d.password === password);
+      
+      if (driver) {
+        const token = randomUUID();
+        const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+
+        await dbStorage.createAdminSession({
+          adminId: driver.id,
+          token,
+          userType: "driver",
+          expiresAt
+        });
+
+        res.json({
+          success: true,
+          token,
+          userType: "driver",
+          driverId: driver.id,
+          message: "تم تسجيل الدخول بنجاح"
+        });
+        return;
+      }
+
+      res.status(401).json({ message: "بيانات تسجيل الدخول غير صحيحة" });
+    } catch (error) {
+      res.status(500).json({ message: "خطأ في الخادم" });
+    }
+  });
+
+  app.post("/api/admin/logout", async (req, res) => {
+    try {
+      const { token } = req.body;
+      if (token) {
+        await dbStorage.deleteAdminSession(token);
+      }
+      res.json({ message: "تم تسجيل الخروج بنجاح" });
+    } catch (error) {
+      res.status(500).json({ message: "خطأ في الخادم" });
+    }
+  });
+
+  app.get("/api/admin/verify", async (req, res) => {
+    try {
+      const token = req.headers.authorization?.replace("Bearer ", "");
+      
+      if (!token) {
+        return res.status(401).json({ message: "رمز التحقق مطلوب" });
+      }
+
+      const session = await dbStorage.getAdminSession(token);
+      
+      if (!session || session.expiresAt < new Date()) {
+        return res.status(401).json({ message: "انتهت صلاحية الجلسة" });
+      }
+
+      res.json({
+        valid: true,
+        userType: session.userType,
+        adminId: session.adminId
+      });
+    } catch (error) {
+      res.status(500).json({ message: "خطأ في الخادم" });
+    }
+  });
+
   // Categories
   app.get("/api/categories", async (req, res) => {
     try {

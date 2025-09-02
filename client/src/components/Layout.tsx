@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLocation } from 'wouter';
-import { Home, Search, Receipt, User, ShoppingCart, Moon, Sun, Menu, X, Settings, Shield, MapPin, Clock } from 'lucide-react';
+import { Home, Search, Receipt, User, ShoppingCart, Moon, Sun, Menu, X, Settings, Shield, MapPin, Clock, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useTheme } from '../context/ThemeContext';
@@ -16,6 +16,8 @@ export default function Layout({ children }: LayoutProps) {
   const { theme, toggleTheme } = useTheme();
   const { getItemCount } = useCart();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [logoClickCount, setLogoClickCount] = useState(0);
+  const [showAdminButtons, setShowAdminButtons] = useState(false);
 
   const isHomePage = location === '/';
   const isAdminPage = location === '/admin';
@@ -87,39 +89,73 @@ export default function Layout({ children }: LayoutProps) {
                     );
                   })}
                   
-                  <div className="border-t border-border pt-4 mt-4">
-                    <Button
-                      variant="ghost"
-                      className="w-full justify-start gap-3 h-12"
-                      onClick={() => {
-                        window.open('/admin', '_blank');
-                        setSidebarOpen(false);
-                      }}
-                      data-testid="sidebar-admin"
-                    >
-                      <Settings className="h-5 w-5 text-blue-500" />
-                      <span className="text-foreground">لوحة التحكم</span>
-                    </Button>
-                    
-                    <Button
-                      variant="ghost"
-                      className="w-full justify-start gap-3 h-12"
-                      onClick={() => {
-                        window.open('/delivery', '_blank');
-                        setSidebarOpen(false);
-                      }}
-                      data-testid="sidebar-delivery"
-                    >
-                      <ShoppingCart className="h-5 w-5 text-green-500" />
-                      <span className="text-foreground">تطبيق السائقين</span>
-                    </Button>
-                  </div>
+                  {showAdminButtons && (
+                    <div className="border-t border-border pt-4 mt-4">
+                      <Button
+                        variant="ghost"
+                        className="w-full justify-start gap-3 h-12"
+                        onClick={() => {
+                          setLocation('/admin-login');
+                          setSidebarOpen(false);
+                        }}
+                        data-testid="sidebar-admin"
+                      >
+                        <Settings className="h-5 w-5 text-blue-500" />
+                        <span className="text-foreground">لوحة التحكم</span>
+                      </Button>
+                      
+                      <Button
+                        variant="ghost"
+                        className="w-full justify-start gap-3 h-12"
+                        onClick={() => {
+                          setLocation('/driver-login');
+                          setSidebarOpen(false);
+                        }}
+                        data-testid="sidebar-delivery"
+                      >
+                        <Truck className="h-5 w-5 text-green-500" />
+                        <span className="text-foreground">تطبيق السائقين</span>
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </SheetContent>
             </Sheet>
-            <div className="text-center">
+            <div 
+              className="text-center cursor-pointer"
+              onClick={() => {
+                const newCount = logoClickCount + 1;
+                setLogoClickCount(newCount);
+                
+                if (newCount === 4) {
+                  setShowAdminButtons(true);
+                  setLogoClickCount(0);
+                  // Show login modal or navigate to login
+                  setLocation('/admin-login');
+                } else if (newCount > 4) {
+                  setLogoClickCount(0);
+                }
+                
+                // Reset counter after 3 seconds if not completed
+                setTimeout(() => {
+                  setLogoClickCount(0);
+                }, 3000);
+              }}
+            >
               <h1 className="text-lg font-bold text-primary">السريع ون</h1>
               <p className="text-xs text-muted-foreground">توصيل سريع</p>
+              {logoClickCount > 0 && logoClickCount < 4 && (
+                <div className="flex justify-center mt-1">
+                  {Array.from({ length: 4 }, (_, i) => (
+                    <div
+                      key={i}
+                      className={`w-2 h-2 rounded-full mx-1 ${
+                        i < logoClickCount ? 'bg-primary' : 'bg-gray-300'
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           <div className="flex items-center gap-2">

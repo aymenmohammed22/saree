@@ -231,7 +231,16 @@ export class MemStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = randomUUID();
-    const user: User = { ...insertUser, id };
+    const user: User = { 
+      ...insertUser, 
+      id,
+      name: insertUser.username,
+      phone: null,
+      email: null,
+      address: null,
+      isActive: true,
+      createdAt: new Date()
+    };
     this.users.set(id, user);
     return user;
   }
@@ -243,7 +252,11 @@ export class MemStorage implements IStorage {
 
   async createCategory(category: InsertCategory): Promise<Category> {
     const id = randomUUID();
-    const newCategory: Category = { ...category, id };
+    const newCategory: Category = { 
+      ...category, 
+      id,
+      isActive: category.isActive ?? true 
+    };
     this.categories.set(id, newCategory);
     return newCategory;
   }
@@ -275,7 +288,18 @@ export class MemStorage implements IStorage {
 
   async createRestaurant(restaurant: InsertRestaurant): Promise<Restaurant> {
     const id = randomUUID();
-    const newRestaurant: Restaurant = { ...restaurant, id, createdAt: new Date() };
+    const newRestaurant: Restaurant = { 
+      ...restaurant, 
+      id, 
+      createdAt: new Date(),
+      description: restaurant.description ?? null,
+      rating: restaurant.rating ?? "0.0",
+      reviewCount: restaurant.reviewCount ?? 0,
+      isOpen: restaurant.isOpen ?? true,
+      minimumOrder: restaurant.minimumOrder ?? 0,
+      deliveryFee: restaurant.deliveryFee ?? 0,
+      categoryId: restaurant.categoryId ?? null
+    };
     this.restaurants.set(id, newRestaurant);
     return newRestaurant;
   }
@@ -303,7 +327,15 @@ export class MemStorage implements IStorage {
 
   async createMenuItem(menuItem: InsertMenuItem): Promise<MenuItem> {
     const id = randomUUID();
-    const newMenuItem: MenuItem = { ...menuItem, id };
+    const newMenuItem: MenuItem = { 
+      ...menuItem, 
+      id,
+      description: menuItem.description ?? null,
+      isAvailable: menuItem.isAvailable ?? true,
+      isSpecialOffer: menuItem.isSpecialOffer ?? false,
+      originalPrice: menuItem.originalPrice ?? null,
+      restaurantId: menuItem.restaurantId ?? null
+    };
     this.menuItems.set(id, newMenuItem);
     return newMenuItem;
   }
@@ -335,7 +367,18 @@ export class MemStorage implements IStorage {
 
   async createOrder(order: InsertOrder): Promise<Order> {
     const id = randomUUID();
-    const newOrder: Order = { ...order, id, createdAt: new Date() };
+    const newOrder: Order = { 
+      ...order, 
+      id, 
+      createdAt: new Date(),
+      customerEmail: order.customerEmail ?? null,
+      notes: order.notes ?? null,
+      status: order.status ?? "pending",
+      estimatedTime: order.estimatedTime ?? "30-45 دقيقة",
+      restaurantId: order.restaurantId ?? null,
+      driverId: order.driverId ?? null,
+      updatedAt: new Date()
+    };
     this.orders.set(id, newOrder);
     return newOrder;
   }
@@ -363,7 +406,15 @@ export class MemStorage implements IStorage {
 
   async createDriver(driver: InsertDriver): Promise<Driver> {
     const id = randomUUID();
-    const newDriver: Driver = { ...driver, id, createdAt: new Date() };
+    const newDriver: Driver = { 
+      ...driver, 
+      id, 
+      createdAt: new Date(),
+      isActive: driver.isActive ?? true,
+      isAvailable: driver.isAvailable ?? true,
+      currentLocation: driver.currentLocation ?? null,
+      earnings: driver.earnings ?? 0
+    };
     this.drivers.set(id, newDriver);
     return newDriver;
   }
@@ -391,7 +442,16 @@ export class MemStorage implements IStorage {
 
   async createSpecialOffer(offer: InsertSpecialOffer): Promise<SpecialOffer> {
     const id = randomUUID();
-    const newOffer: SpecialOffer = { ...offer, id, createdAt: new Date() };
+    const newOffer: SpecialOffer = { 
+      ...offer, 
+      id, 
+      createdAt: new Date(),
+      isActive: offer.isActive ?? true,
+      minimumOrder: offer.minimumOrder ?? 0,
+      discountPercent: offer.discountPercent ?? null,
+      discountAmount: offer.discountAmount ?? null,
+      validUntil: offer.validUntil ?? null
+    };
     this.specialOffers.set(id, newOffer);
     return newOffer;
   }

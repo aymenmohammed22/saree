@@ -42,7 +42,7 @@ export const restaurants = pgTable("restaurants", {
   name: text("name").notNull(),
   description: text("description"),
   image: text("image").notNull(),
-  rating: decimal("rating", { precision: 2, scale: 1 }).default("0.0"),
+  rating: text("rating").default("0.0"),
   reviewCount: integer("review_count").default(0),
   deliveryTime: text("delivery_time").notNull(),
   isOpen: boolean("is_open").default(true),
@@ -114,6 +114,26 @@ export const specialOffers = pgTable("special_offers", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// ---------- Admin Users ----------
+export const adminUsers = pgTable("admin_users", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  email: text("email").notNull().unique(),
+  password: text("password").notNull(),
+  userType: text("user_type").notNull(), // 'admin' or 'driver'
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// ---------- Admin Sessions ----------
+export const adminSessions = pgTable("admin_sessions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  adminId: varchar("admin_id").references(() => adminUsers.id),
+  token: text("token").notNull().unique(),
+  userType: text("user_type").notNull(),
+  expiresAt: timestamp("expires_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // ---------- Insert Schemas ----------
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
@@ -148,6 +168,16 @@ export const insertSpecialOfferSchema = createInsertSchema(specialOffers).omit({
   createdAt: true,
 });
 
+export const insertAdminUserSchema = createInsertSchema(adminUsers).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertAdminSessionSchema = createInsertSchema(adminSessions).omit({
+  id: true,
+  createdAt: true,
+});
+
 // ---------- Types ----------
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -169,3 +199,9 @@ export type InsertDriver = z.infer<typeof insertDriverSchema>;
 
 export type SpecialOffer = typeof specialOffers.$inferSelect;
 export type InsertSpecialOffer = z.infer<typeof insertSpecialOfferSchema>;
+
+export type AdminUser = typeof adminUsers.$inferSelect;
+export type InsertAdminUser = z.infer<typeof insertAdminUserSchema>;
+
+export type AdminSession = typeof adminSessions.$inferSelect;
+export type InsertAdminSession = z.infer<typeof insertAdminSessionSchema>;
