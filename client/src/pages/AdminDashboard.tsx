@@ -40,24 +40,24 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
   ];
 
   return (
-    <div className=\"min-h-screen bg-gray-50\" dir=\"rtl\">
+    <div className="min-h-screen bg-gray-50" dir="rtl">
       {/* Header */}
-      <header className=\"bg-white shadow-sm border-b\">
-        <div className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8\">
-          <div className=\"flex justify-between items-center h-16\">
-            <div className=\"flex items-center gap-3\">
-              <Settings className=\"h-8 w-8 text-blue-600\" />
+      <header className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center gap-3">
+              <Settings className="h-8 w-8 text-blue-600" />
               <div>
-                <h1 className=\"text-xl font-bold text-gray-900\">لوحة التحكم</h1>
-                <p className=\"text-sm text-gray-500\">إدارة نظام التوصيل</p>
+                <h1 className="text-xl font-bold text-gray-900">لوحة التحكم</h1>
+                <p className="text-sm text-gray-500">إدارة نظام التوصيل</p>
               </div>
             </div>
             <Button 
-              variant=\"outline\" 
+              variant="outline" 
               onClick={handleLogout}
-              className=\"flex items-center gap-2\"
+              className="flex items-center gap-2"
             >
-              <LogOut className=\"h-4 w-4\" />
+              <LogOut className="h-4 w-4" />
               تسجيل الخروج
             </Button>
           </div>
@@ -65,18 +65,18 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
       </header>
 
       {/* Main Content */}
-      <main className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8\">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Cards */}
-        <div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8\">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
               <Card key={index}>
-                <CardContent className=\"p-6\">
-                  <div className=\"flex items-center justify-between\">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
                     <div>
-                      <p className=\"text-sm font-medium text-gray-600\">{stat.title}</p>
-                      <p className=\"text-2xl font-bold text-gray-900\">{stat.value}</p>
+                      <p className="text-sm font-medium text-gray-600">{stat.title}</p>
+                      <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
                     </div>
                     <Icon className={`h-8 w-8 ${stat.color}`} />
                   </div>
@@ -87,33 +87,33 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
         </div>
 
         {/* Tabs Navigation */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className=\"space-y-6\">
-          <TabsList className=\"grid w-full grid-cols-5\">
-            <TabsTrigger value=\"overview\">نظرة عامة</TabsTrigger>
-            <TabsTrigger value=\"orders\">الطلبات</TabsTrigger>
-            <TabsTrigger value=\"restaurants\">المطاعم</TabsTrigger>
-            <TabsTrigger value=\"drivers\">السائقين</TabsTrigger>
-            <TabsTrigger value=\"categories\">الفئات</TabsTrigger>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="overview">نظرة عامة</TabsTrigger>
+            <TabsTrigger value="orders">الطلبات</TabsTrigger>
+            <TabsTrigger value="restaurants">المطاعم</TabsTrigger>
+            <TabsTrigger value="drivers">السائقين</TabsTrigger>
+            <TabsTrigger value="categories">الفئات</TabsTrigger>
           </TabsList>
 
-          <TabsContent value=\"overview\" className=\"space-y-6\">
-            <div className=\"grid grid-cols-1 lg:grid-cols-2 gap-6\">
+          <TabsContent value="overview" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle className=\"flex items-center gap-2\">
-                    <BarChart3 className=\"h-5 w-5\" />
+                  <CardTitle className="flex items-center gap-2">
+                    <BarChart3 className="h-5 w-5" />
                     الطلبات الحديثة
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className=\"space-y-4\">
+                  <div className="space-y-4">
                     {[1, 2, 3].map((order) => (
-                      <div key={order} className=\"flex items-center justify-between p-3 border rounded-lg\">
+                      <div key={order} className="flex items-center justify-between p-3 border rounded-lg">
                         <div>
-                          <p className=\"font-medium\">طلب #{1000 + order}</p>
-                          <p className=\"text-sm text-gray-600\">مطعم الوزيكو للعربكة</p>
+                          <p className="font-medium">طلب #{1000 + order}</p>
+                          <p className="text-sm text-gray-600">مطعم الوزيكو للعربكة</p>
                         </div>
-                        <Badge variant=\"secondary\">قيد التحضير</Badge>
+                        <Badge variant="secondary">قيد التحضير</Badge>
                       </div>
                     ))}
                   </div>
@@ -122,20 +122,20 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
 
               <Card>
                 <CardHeader>
-                  <CardTitle className=\"flex items-center gap-2\">
-                    <Users className=\"h-5 w-5\" />
+                  <CardTitle className="flex items-center gap-2">
+                    <Users className="h-5 w-5" />
                     السائقين النشطين
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className=\"space-y-4\">
+                  <div className="space-y-4">
                     {['أحمد محمد', 'علي حسن', 'سارة أحمد'].map((driver, index) => (
-                      <div key={index} className=\"flex items-center justify-between p-3 border rounded-lg\">
+                      <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
                         <div>
-                          <p className=\"font-medium\">{driver}</p>
-                          <p className=\"text-sm text-gray-600\">متاح للتوصيل</p>
+                          <p className="font-medium">{driver}</p>
+                          <p className="text-sm text-gray-600">متاح للتوصيل</p>
                         </div>
-                        <Badge variant=\"default\" className=\"bg-green-100 text-green-800\">
+                        <Badge variant="default" className="bg-green-100 text-green-800">
                           نشط
                         </Badge>
                       </div>
@@ -146,33 +146,33 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
             </div>
           </TabsContent>
 
-          <TabsContent value=\"orders\" className=\"space-y-6\">
+          <TabsContent value="orders" className="space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle>إدارة الطلبات</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className=\"space-y-4\">
+                <div className="space-y-4">
                   {[1, 2, 3, 4, 5].map((order) => (
-                    <div key={order} className=\"flex items-center justify-between p-4 border rounded-lg\">
-                      <div className=\"flex-1\">
-                        <div className=\"flex items-center gap-4\">
+                    <div key={order} className="flex items-center justify-between p-4 border rounded-lg">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-4">
                           <div>
-                            <p className=\"font-medium\">طلب #{1000 + order}</p>
-                            <p className=\"text-sm text-gray-600\">محمد أحمد - 05{order}1234567</p>
+                            <p className="font-medium">طلب #{1000 + order}</p>
+                            <p className="text-sm text-gray-600">محمد أحمد - 05{order}1234567</p>
                           </div>
-                          <Badge variant={order % 2 === 0 ? \"default\" : \"secondary\"}>
-                            {order % 2 === 0 ? \"مؤكد\" : \"قيد المراجعة\"}
+                          <Badge variant={order % 2 === 0 ? "default" : "secondary"}>
+                            {order % 2 === 0 ? "مؤكد" : "قيد المراجعة"}
                           </Badge>
                         </div>
-                        <p className=\"text-sm text-gray-500 mt-2\">₪{50 + order * 10} - منذ {order} ساعات</p>
+                        <p className="text-sm text-gray-500 mt-2">₪{50 + order * 10} - منذ {order} ساعات</p>
                       </div>
-                      <div className=\"flex items-center gap-2\">
-                        <Button variant=\"outline\" size=\"sm\">
-                          <Eye className=\"h-4 w-4\" />
+                      <div className="flex items-center gap-2">
+                        <Button variant="outline" size="sm">
+                          <Eye className="h-4 w-4" />
                         </Button>
-                        <Button variant=\"outline\" size=\"sm\">
-                          <Edit className=\"h-4 w-4\" />
+                        <Button variant="outline" size="sm">
+                          <Edit className="h-4 w-4" />
                         </Button>
                       </div>
                     </div>
@@ -182,28 +182,28 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
             </Card>
           </TabsContent>
 
-          <TabsContent value=\"restaurants\" className=\"space-y-6\">
+          <TabsContent value="restaurants" className="space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle>إدارة المطاعم</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className=\"space-y-4\">
+                <div className="space-y-4">
                   {['مطعم الوزيكو للعربكة', 'حلويات الشام', 'مقهى العروبة'].map((restaurant, index) => (
-                    <div key={index} className=\"flex items-center justify-between p-4 border rounded-lg\">
-                      <div className=\"flex items-center gap-4\">
-                        <Store className=\"h-8 w-8 text-gray-400\" />
+                    <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+                      <div className="flex items-center gap-4">
+                        <Store className="h-8 w-8 text-gray-400" />
                         <div>
-                          <p className=\"font-medium\">{restaurant}</p>
-                          <p className=\"text-sm text-gray-600\">{15 + index} عنصر في القائمة</p>
+                          <p className="font-medium">{restaurant}</p>
+                          <p className="text-sm text-gray-600">{15 + index} عنصر في القائمة</p>
                         </div>
                       </div>
-                      <div className=\"flex items-center gap-2\">
-                        <Badge variant=\"default\" className=\"bg-green-100 text-green-800\">
+                      <div className="flex items-center gap-2">
+                        <Badge variant="default" className="bg-green-100 text-green-800">
                           مفتوح
                         </Badge>
-                        <Button variant=\"outline\" size=\"sm\">
-                          <Edit className=\"h-4 w-4\" />
+                        <Button variant="outline" size="sm">
+                          <Edit className="h-4 w-4" />
                         </Button>
                       </div>
                     </div>
@@ -213,29 +213,29 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
             </Card>
           </TabsContent>
 
-          <TabsContent value=\"drivers\" className=\"space-y-6\">
+          <TabsContent value="drivers" className="space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle>إدارة السائقين</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className=\"space-y-4\">
+                <div className="space-y-4">
                   {['أحمد محمد', 'علي حسن', 'سارة أحمد', 'محمد علي'].map((driver, index) => (
-                    <div key={index} className=\"flex items-center justify-between p-4 border rounded-lg\">
-                      <div className=\"flex items-center gap-4\">
-                        <Truck className=\"h-8 w-8 text-gray-400\" />
+                    <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+                      <div className="flex items-center gap-4">
+                        <Truck className="h-8 w-8 text-gray-400" />
                         <div>
-                          <p className=\"font-medium\">{driver}</p>
-                          <p className=\"text-sm text-gray-600\">05{index + 1}1234567</p>
+                          <p className="font-medium">{driver}</p>
+                          <p className="text-sm text-gray-600">05{index + 1}1234567</p>
                         </div>
                       </div>
-                      <div className=\"flex items-center gap-2\">
-                        <Badge variant={index % 2 === 0 ? \"default\" : \"secondary\"} 
-                               className={index % 2 === 0 ? \"bg-green-100 text-green-800\" : \"\"}>
-                          {index % 2 === 0 ? \"متاح\" : \"مشغول\"}
+                      <div className="flex items-center gap-2">
+                        <Badge variant={index % 2 === 0 ? "default" : "secondary"} 
+                               className={index % 2 === 0 ? "bg-green-100 text-green-800" : ""}>
+                          {index % 2 === 0 ? "متاح" : "مشغول"}
                         </Badge>
-                        <Button variant=\"outline\" size=\"sm\">
-                          <Edit className=\"h-4 w-4\" />
+                        <Button variant="outline" size="sm">
+                          <Edit className="h-4 w-4" />
                         </Button>
                       </div>
                     </div>
@@ -245,31 +245,31 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
             </Card>
           </TabsContent>
 
-          <TabsContent value=\"categories\" className=\"space-y-6\">
+          <TabsContent value="categories" className="space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle>إدارة الفئات</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className=\"space-y-4\">
+                <div className="space-y-4">
                   {['مطاعم', 'مقاهي', 'حلويات', 'سوبرماركت', 'صيدليات'].map((category, index) => (
-                    <div key={index} className=\"flex items-center justify-between p-4 border rounded-lg\">
-                      <div className=\"flex items-center gap-4\">
-                        <Package className=\"h-8 w-8 text-gray-400\" />
+                    <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+                      <div className="flex items-center gap-4">
+                        <Package className="h-8 w-8 text-gray-400" />
                         <div>
-                          <p className=\"font-medium\">{category}</p>
-                          <p className=\"text-sm text-gray-600\">{5 + index * 2} مطعم</p>
+                          <p className="font-medium">{category}</p>
+                          <p className="text-sm text-gray-600">{5 + index * 2} مطعم</p>
                         </div>
                       </div>
-                      <div className=\"flex items-center gap-2\">
-                        <Badge variant=\"default\" className=\"bg-blue-100 text-blue-800\">
+                      <div className="flex items-center gap-2">
+                        <Badge variant="default" className="bg-blue-100 text-blue-800">
                           نشط
                         </Badge>
-                        <Button variant=\"outline\" size=\"sm\">
-                          <Edit className=\"h-4 w-4\" />
+                        <Button variant="outline" size="sm">
+                          <Edit className="h-4 w-4" />
                         </Button>
-                        <Button variant=\"outline\" size=\"sm\">
-                          <Trash2 className=\"h-4 w-4\" />
+                        <Button variant="outline" size="sm">
+                          <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
                     </div>
